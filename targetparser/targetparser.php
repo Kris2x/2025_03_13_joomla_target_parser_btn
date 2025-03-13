@@ -47,15 +47,24 @@ class PlgEditorsXtdTargetParser extends CMSPlugin
                     var parser = new DOMParser();
                     var doc = parser.parseFromString(content, 'text/html');
                     var links = doc.getElementsByTagName('a');
+                    var updatedCount = 0;
 
                     for (var i = 0; i < links.length; i++) {
-                        links[i].setAttribute('target', '_blank');
+                        var currentTarget = links[i].getAttribute('target');
+                        if (currentTarget !== '_blank') {
+                            links[i].setAttribute('target', '_blank');
+                            updatedCount++;
+                        }
+                    }
+
+                    // Jeśli nie zaktualizowano żadnych linków, zakończ z komunikatem
+                    if (updatedCount === 0) {
+                        alert('Nie znaleziono linków do zaktualizowania - wszystkie już mają target=\"_blank\".');
+                        return;
                     }
 
                     // Konwersja zmodyfikowanego HTML z powrotem na string
                     newContent = doc.documentElement.outerHTML;
-
-                    // Usuń dodatkowe znaczniki <html><body> dodane przez parser
                     newContent = newContent.replace(/<html><head>.*?<\/head><body>/, '').replace(/<\/body><\/html>/, '');
 
                     // Wstaw zmodyfikowaną zawartość z powrotem do edytora
@@ -65,7 +74,7 @@ class PlgEditorsXtdTargetParser extends CMSPlugin
                         Joomla.editors.instances[editor].setValue(newContent);
                     }
 
-                    alert('Wszystkie linki zostały zaktualizowane o target=\"_blank\"!');
+                    alert('Zaktualizowano target=\"_blank\" dla ' + updatedCount + ' pozycji!');
                 } catch (e) {
                     console.error('Błąd w obsłudze edytora: ' + e.message);
                     alert('Wystąpił błąd: ' + e.message);
