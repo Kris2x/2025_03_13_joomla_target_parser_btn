@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" version="4.0" group="editors-xtd" method="upgrade">
+    <name>Target parser - przycisk edytora</name>
+    <author>Kris Razziel</author>
+    <creationDate>Marzec 2025</creationDate>
+    <version>1.0.0</version>
+    <description>Dodatkowy przycisk pod edytorem artykułu do prarsowania atrybutów linków</description>
+    <files>
+        <filename plugin="targetparser">targetparser.php</filename>
+    </files>
+    <languages>
+        <language tag="pl-PL">language/pl-PL/plg_editors-xtd_targetparser.ini</language>
+    </languages>
+</extension>
